@@ -1,0 +1,7 @@
+packages:
+  - nmap
+  - vsftpd
+  - cockpit
+mypackage: nmap
+myftpservice: vsftpd
+myfileservice: smb
