@@ -1,0 +1,10 @@
+- name: Extract zip file
+  hosts: win
+  tasks:
+  - name: Wind Desc
+    ansible.windows.win_dsc:
+      resource_name: Archive
+      Ensure: Present
+      Path: C:\Users\ansible\Desktop\example.zip
+      Destination: C:\Users\ansible\Desktop\zip
+

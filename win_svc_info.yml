@@ -1,0 +1,23 @@
+- name: Get info for all installed services
+  hosts: win
+  tasks:
+    - name: Get info for all installed services 
+      ansible.windows.win_service_info:
+      register: service_info
+
+    - name: Save service info to a file
+      copy:
+        content: "{{ service_info }}"
+        dest: "C:\\Users\\ansible\\Desktop\\service_info.txt"
+
+    - name: Save service info to a file
+      copy:
+        content: "{{ service_info | to_nice_yaml }}"
+        dest: "C:\\Users\\ansible\\Desktop\\service_info.yaml"
+
+
+    - name: Save service info to a file
+      copy:
+        content: "{{ service_info | to_nice_json }}"
+        dest: "C:\\Users\\ansible\\Desktop\\service_info.json"
+

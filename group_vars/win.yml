@@ -1,0 +1,18 @@
+---
+ansible_become: false
+ansible_controller_ip: 192.168.1.41
+ansible_connection: winrm
+ansible_winrm_server_cert_validation: ignore
+ansible_host: 192.168.1.40
+ansible_winrm_transport: credssp
+ansible_winrm_scheme: https
+ansible_winrm_port: 5986
+ansible_winrm_cert_key_pem: /root/ansible/cert_key.pem
+ansible_winrm_cert_pem: /root/ansible/cert.pem
+ansible_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39363236633861666261363030336663663235353130383232333564373939336536363661323736
+          3863333930396465373034313634373930616563613839640a303834653030313765326463656164
+          63303230376365636565636462393035653566306432656336343932326638313665393661646463
+          3633306665646131310a343830383363393763336564636537316536626339383961643035616239
+          3233

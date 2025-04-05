@@ -1,0 +1,15 @@
+- name: Prompt for user input
+  hosts: localhost
+  vars_prompt:
+    - name: "username"
+      prompt: "Enter your username"
+      private: no  # 'no' means the input is visible
+    - name: "password"
+      prompt: "Enter your password"
+      private: yes  # 'yes' means the input is hidden
+
+  tasks:
+    - name: Show user input
+      debug:
+        msg: "The username is {{ username }} and the password is {{ password }}"
+

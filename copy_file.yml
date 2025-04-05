@@ -1,0 +1,19 @@
+---
+- name: Copy file to Ubuntu
+  hosts: ubuntu24
+  become: true
+  become_method: sudo
+  tasks:
+    - name: Copy file to Ubuntu
+      ansible.builtin.copy:
+        src: "/root/KMS VL AIO.zip"
+        dest: /root/
+        mode: '0644'
+
+- name: Copy file to Windows
+  hosts: win
+  tasks:
+    - name: Copy file to Windows
+      win_copy:
+        src: "/root/KMS VL AIO.zip"
+        dest: C:\

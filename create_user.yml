@@ -1,0 +1,22 @@
+---
+- name: Create user on Ubuntu
+  hosts: ubuntu24
+  become: true
+  become_method: sudo
+  tasks:
+    - name: Create user on Ubuntu
+      ansible.builtin.user:
+        name: ansible
+        password: "{{ 'ansible' | password_hash('sha512', 'passlib') }}"
+        state: present
+        create_home: yes
+
+- name: Create user on Windows
+  hosts: win
+  tasks:
+    - name: Create user on Windows
+      ansible.windows.win_user:
+        name: ramos
+        password: 'ramos'
+        state: present
+

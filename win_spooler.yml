@@ -1,0 +1,13 @@
+- name: Spooler Service
+  hosts: win
+  tasks:
+    - name: Check Spooler Service on Windows
+      ansible.windows.win_service:
+        name: spooler
+        state: started
+    - name: Registry path MyClassroom and its entries are absent
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\MyClassroom
+        state: absent
+        delete_key: yes
+

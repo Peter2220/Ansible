@@ -1,0 +1,11 @@
+- name: Using set_fact example
+  hosts: localhost
+  tasks:
+    - name: Set a dynamic variable
+      set_fact:
+        full_name: "John Doe"
+
+    - name: Use the new variable
+      debug:
+        msg: "User's full name is {{ full_name }}"
+

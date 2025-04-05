@@ -1,0 +1,50 @@
+---
+- name: Copy files from Windows to Ansible controller
+  hosts: windows
+  vars:
+    ansible_controller_ip: "192.168.1.41"
+  tasks:
+    - name: Ensure the destination directory exists
+      ansible.windows.win_shell:
+        _raw_params: "if (!(Test-Path -Path 'C:\\Users\\ansible\\Desktop')) { New-Item -ItemType Directory -Path 'C:\\Users\\ansible\\Desktop' }"
+
+    - name: Check if the file exists
+      ansible.windows.win_shell:
+        _raw_params: "Test-Path -Path 'C:\\Users\\ansible\\Desktop\\service_info.yaml'"
+      register: file_exists
+
+    - name: Debug file existence
+      ansible.builtin.debug:
+        msg: "File exists: {{ file_exists.stdout }}"
+
+    - name: Ensure destination directory on Ansible controller exists
+      ansible.builtin.file:
+        path: /root/ansible
+        state: directory
+      delegate_to: localhost
+
+    - name: Debug ansible controller IP
+      ansible.builtin.debug:
+        msg: "Ansible controller IP: {{ ansible_controller_ip }}"
+
+    - name: Check network path accessibility
+      ansible.windows.win_shell:
+        _raw_params: "Test-Path -Path '\\\\{{ ansible_controller_ip }}\\root\\ansible\\'"
+      register: path_accessible
+      when: file_exists.stdout == "True"
+
+    - name: Debug path accessibility
+      ansible.builtin.debug:
+        msg: "Path accessible: {{ path_accessible.stdout }}"
+      when: file_exists.stdout == "True"
+
+    - name: Attempt to copy file using PowerShell
+      ansible.windows.win_shell:
+        _raw_params: |
+          if (Test-Path -Path '\\\\{{ ansible_controller_ip }}\\root\\ansible\\') {
+            Copy-Item -Path 'C:\\Users\\ansible\\Desktop\\service_info.yaml' -Destination '\\\\{{ ansible_controller_ip }}\\root\\ansible\\'
+          } else {
+            Write-Host 'Network path not accessible'
+          }
+      when: file_exists.stdout == "True" and path_accessible.stdout == "True"
+

@@ -1,0 +1,16 @@
+- name: My Play
+  hosts: all
+  tasks:
+  - name: Task1
+    debug: 
+      msg: Hello World
+  - name: Task2
+    debug:
+      msg: Hello Task2
+
+- name: Ubuntu Settings
+  hosts: ubuntu
+  tasks:
+  - name: Hello ubuntu
+    debug:
+      msg: Hello Ubuntu
